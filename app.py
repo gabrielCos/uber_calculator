@@ -17,13 +17,17 @@ valor_regex = re.compile(r'R\$\s*\d+,\d+') #regex to find de value of the uber r
 
 total = 0 #initial value
 
+#passing the dates with variables including the day of start and end
+initial_date = datetime.date(2026, 2, 25) - datetime.timedelta(days=1)
+final_date = datetime.date(2026, 3, 29) + datetime.timedelta(days=1)
+
 with MailBox(IMAP_SERVER).login(EMAIL, PASSWORD) as mb:
     for msg in mb.fetch(
                         #filters
                         AND(
                             from_="Recibos da Uber", 
-                            date_gte=datetime.date(2026, 2, 25), 
-                            date_lt=datetime.date(2026, 3, 11),
+                            date_gte = initial_date, 
+                            date_lt = final_date,
                             ),
                             limit=20,
                             reverse=True
