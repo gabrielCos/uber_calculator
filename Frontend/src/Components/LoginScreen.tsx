@@ -1,9 +1,20 @@
 import React from "react";
+import { GoogleLogin } from '@react-oauth/google';
 
 const LoginScreen: React.FC = () => {
     return (
-        <div className="bg-white w-144 h-72 shadow-xl rounded-lg flex justify-center pt-6">
-            <p className="text-red-500">Use o e-mail cadastrado no seu uber!</p>
+        <div className="bg-white w-144 h-72 shadow-xl rounded-lg flex flex-col justify-center items-center gap-4">
+            <p className="text-red-500 text-center">Use o e-mail cadastrado no seu uber!</p>
+            <div className="w-64 flex justify-center">
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        console.log(credentialResponse);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                />
+            </div>
         </div>
     )
 }
