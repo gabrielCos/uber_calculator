@@ -14,6 +14,9 @@ def buscar_corridas(data_inicio: str, data_fim: str, limite: int = 20):
 
     try:
         with MailBox(IMAP_SERVER, IMAP_PORT).login(EMAIL, PASSWORD) as mb:
+            print("SERVER:", IMAP_SERVER)
+            print("PORT:", IMAP_PORT)
+            print("EMAIL:", EMAIL)
             for msg in mb.fetch(
                 AND(
                     from_="noreply@uber.com",
