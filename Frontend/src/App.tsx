@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import './App.css'
+import LoginScreen from './Components/LoginScreen'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div className="bg-gray-100 w-screen h-screen"></div>
+      <div className="bg-gray-100 w-screen h-screen flex justify-center items-center">
+        <LoginScreen />
+      </div>
     </>
   )
 }
