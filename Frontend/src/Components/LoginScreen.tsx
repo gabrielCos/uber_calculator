@@ -1,5 +1,6 @@
 import React from "react";
 import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 const LoginScreen: React.FC = () => {
     return (
@@ -8,7 +9,8 @@ const LoginScreen: React.FC = () => {
             <div className="w-64 flex justify-center">
                 <GoogleLogin
                     onSuccess={credentialResponse => {
-                        console.log(credentialResponse);
+                        const decoded = jwtDecode(credentialResponse?.credential);
+                        console.log(decoded);
                     }}
                     onError={() => {
                         console.log('Login Failed');
