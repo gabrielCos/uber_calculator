@@ -9,7 +9,7 @@ const LoginScreen: React.FC = () => {
             <div className="w-64 flex justify-center">
                 <GoogleLogin
                     onSuccess={credentialResponse => {
-                        const decoded = jwtDecode(credentialResponse?.credential);
+                        const decoded = jwtDecode(credentialResponse?.credential!);
                         console.log(decoded);
                     }}
                     onError={() => {
