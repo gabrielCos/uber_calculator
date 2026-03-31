@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
-import ButtonWrapper from "./ButtonWrapper";
+import ButtonWrapper from "../ButtonWrapper/ButtonWrapper";
 
 const LoginScreen: React.FC = () => {
     return (
