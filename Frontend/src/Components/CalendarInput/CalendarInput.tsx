@@ -4,19 +4,26 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import CalendarioIcon from "../../assets/Icons/calendarioIcon.png"
 
+interface CalendarInputProps {
+    selectedDate: Date | null;
+    onChange: (date: Date | null) => void;
+}
 
-const CalendarInput: React.FC = () => { 
-    const [date, setDate] = React.useState<Date | null>(null);
+
+const CalendarInput: React.FC<CalendarInputProps> = ({ selectedDate, onChange }) => { 
 
     return (
-        <div className="flex justify-center items-center rounded-lg border-3 border-black/30 pr-1">
+        <div className="flex justify-start w-[172px] items-center rounded-lg border-3 border-black/30 p-1">
             <DatePicker
-                selected={date}
-                onChange={(date: Date | null) => setDate(date)}
+                selected={selectedDate}
+                onChange={(date: Date | null) => onChange(date)}
+                wrapperClassName="h-[48px]"
                 customInput={
-                    <button className="text-black rounded-xl flex items-center">
+                    <button className="text-black rounded-xl flex items-center h-auto">
                         <img src={CalendarioIcon} className="w-[48px] h-auto"/>
-                        {date ? date.toLocaleDateString("pt-BR") : "Selecionar data"}
+                        {selectedDate
+                            ? selectedDate.toLocaleDateString("pt-BR")
+                            : "Selecionar Data"}
                     </button>
                 }
             />
