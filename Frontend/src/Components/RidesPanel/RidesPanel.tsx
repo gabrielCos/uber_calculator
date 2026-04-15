@@ -2,24 +2,34 @@ import React, {useState} from "react";
 
 import profilePicture from "../../assets/profilePicture.jpg"
 
-
 import CalendarInput from "../CalendarInput/CalendarInput";
+import RideItem from "../RideItem/RideItem";
+
+import corridas from "../../../Data/Data";
 
 const RidesPanel: React.FC = () => {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
+    const [filteredRides, setFilteredRides] = useState(corridas);
 
     const handleClick = () => {
-    if (!startDate || !endDate) {
-        alert("Selecione as duas datas!");
-        return;
-    }
-    console.log("Início:", startDate?.toISOString().split("T")[0]);
-    console.log("Fim:", endDate?.toISOString().split("T")[0]);
+        if (!startDate || !endDate) {
+            alert("Selecione as duas datas!");
+            return;
+        }
+        const result = corridas.filter((corrida) => {
+        const rideDate = new Date(corrida.data);
+
+        return rideDate >= startDate && rideDate <= endDate;
+        });
+
+        setFilteredRides(result);
+        console.log("Início:", startDate?.toISOString().split("T")[0]);
+        console.log("Fim:", endDate?.toISOString().split("T")[0]);
     };
     
     return (
-        <div className="flex flex-col h-auto">
+        <div className="flex flex-col h-auto gap-2">
             <div className="bg-white w-144 h-auto shadow-xl rounded-lg p-4 flex flex-col gap-2">
                 <div className="flex gap-4 items-center">
                     <img src={profilePicture} className="w-[40px] h-[40px] rounded-full object-cover" />
@@ -47,6 +57,15 @@ const RidesPanel: React.FC = () => {
                         Ver Corridas
                     </button>
                 </div>
+            </div>
+            <div className="flex flex-col gap-2">
+                {filteredRides.map((corrida, index) => (
+                    <RideItem
+                        key={index}
+                        data={corrida.data}
+                        value={corrida.value}
+                    />
+                ))}
             </div>
         </div>
     )

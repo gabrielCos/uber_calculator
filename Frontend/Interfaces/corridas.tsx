@@ -1,6 +1,4 @@
-interface Corrida {
+export interface Corrida {
     data: string;
     value: number; 
 }
-
-export default Corrida;

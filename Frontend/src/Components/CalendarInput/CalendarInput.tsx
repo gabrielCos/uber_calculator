@@ -3,8 +3,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
-import CalendarioIcon from "../../assets/Icons/calendarioIcon.png"
-
 interface CalendarInputProps {
     selectedDate: Date | null;
     onChange: (date: Date | null) => void;
@@ -21,7 +19,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({ selectedDate, onChange })
                 wrapperClassName="h-[48px]"
                 customInput={
                     <button className="text-black/70 rounded-xl flex items-center h-auto">
-                        {/*<img src={CalendarioIcon} className="w-[48px] h-auto"/>*/}
                         <FaRegCalendarAlt className="w-[48px] h-auto text-black/70"/>
                         {selectedDate
                             ? selectedDate.toLocaleDateString("pt-BR")

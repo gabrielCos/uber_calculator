@@ -1,24 +1,26 @@
-import Corrida from "../Interfaces/corridas";
+import type {Corrida} from "../Interfaces/corridas";
 
 const corridas: Corrida[] = [
     {
-        data: "25/02/2026",
+        data: "2026-02-25",
         value: 23.50
     },
     {
-        data: "26/02/2026",
+        data: "2026-02-26",
         value: 15.00
     },
     {
-        data: "27/02/2026",
+        data: "2026-02-27",
         value: 32.75
     },
     {
-        data: "01/03/2026",
+        data: "2026-03-01",
         value: 18.90
     },
     {
-        data: "05/03/2026",
+        data: "2026-03-05",
         value: 27.30
     }
 ];
+
+export default corridas
