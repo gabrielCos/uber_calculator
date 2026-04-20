@@ -7,10 +7,14 @@ import RideItem from "../RideItem/RideItem";
 
 import corridas from "../../../Data/Data";
 
+import { FaCarSide } from "react-icons/fa6";
+
 const RidesPanel: React.FC = () => {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [filteredRides, setFilteredRides] = useState(corridas);
+    const [totalValue, setTotalValue] = useState(0);
+    const [totalRides, setTotalRides] = useState(0);
 
     const handleClick = () => {
         if (!startDate || !endDate) {
@@ -66,6 +70,15 @@ const RidesPanel: React.FC = () => {
                         value={corrida.value}
                     />
                 ))}
+            </div>
+            <div className="bg-black/70 w-144 h-auto shadow-xl rounded-lg p-4 flex items-center justify-between">
+                <div className="flex gap-2 items-center">
+                    <FaCarSide className="w-[48px] h-auto text-white" />
+                    <p className="text-white"> Total de Corridas: {totalRides}</p>       
+                </div>
+                <div>
+                    <p className="text-white">Valor total: R$ {totalValue}</p>
+                </div>
             </div>
         </div>
     )
