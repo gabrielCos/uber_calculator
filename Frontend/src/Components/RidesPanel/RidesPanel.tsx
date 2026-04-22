@@ -1,35 +1,46 @@
 import React, {useState} from "react";
 
 import profilePicture from "../../assets/profilePicture.jpg"
+import { FaCarSide } from "react-icons/fa6";
 
 import CalendarInput from "../CalendarInput/CalendarInput";
 import RideItem from "../RideItem/RideItem";
 
 import corridas from "../../../Data/Data";
 
-import { FaCarSide } from "react-icons/fa6";
+
+import {type Ride} from "../../../Interfaces/corridas";
 
 const RidesPanel: React.FC = () => {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
-    const [filteredRides, setFilteredRides] = useState(corridas);
+    const [rides, setRides] = useState<Ride[]>([]);
     const [totalValue, setTotalValue] = useState(0);
-    const [totalRides, setTotalRides] = useState(0);
+    const [count, setCount] = useState(0);
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (!startDate || !endDate) {
-            alert("Selecione as duas datas!");
+            alert("Select Both Dates")
             return;
         }
-        const result = corridas.filter((corrida) => {
-        const rideDate = new Date(corrida.data);
 
-        return rideDate >= startDate && rideDate <= endDate;
-        });
+        try {
+            const start = startDate.toISOString().split("T")[0];
+            const end = endDate.toISOString().split("T")[0];
 
-        setFilteredRides(result);
-        console.log("Início:", startDate?.toISOString().split("T")[0]);
-        console.log("Fim:", endDate?.toISOString().split("T")[0]);
+            const response = await fetch(
+                `http://localhost:8000/rides?start_date=${start}&end_date=${end}`
+            );
+
+            const data = await response.json();
+            console.log(data);
+            
+            setRides(data.rides);
+            setTotalValue(data.total);
+            setCount(data.count);
+        } catch (error) {
+        console.error("Error fetching rides:", error);
+        }
     };
     
     return (
@@ -63,18 +74,18 @@ const RidesPanel: React.FC = () => {
                 </div>
             </div>
             <div className="flex flex-col gap-2">
-                {filteredRides.map((corrida, index) => (
+                {rides.map((ride, index) => (
                     <RideItem
                         key={index}
-                        data={corrida.data}
-                        value={corrida.value}
+                        data={ride.date}
+                        value={ride.value}
                     />
                 ))}
             </div>
             <div className="bg-black/70 w-144 h-auto shadow-xl rounded-lg p-4 flex items-center justify-between">
                 <div className="flex gap-2 items-center">
                     <FaCarSide className="w-[48px] h-auto text-white" />
-                    <p className="text-white"> Total de Corridas: {totalRides}</p>       
+                    <p className="text-white"> Total de Corridas: {count}</p>       
                 </div>
                 <div>
                     <p className="text-white">Valor total: R$ {totalValue}</p>

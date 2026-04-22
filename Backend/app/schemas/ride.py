@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 from typing import List
 
-class Corrida(BaseModel):
+class Ride(BaseModel):
     valor: float
     data: str
 
-class CorridasResponse(BaseModel):
+class RidesResponse(BaseModel):
     total: float
     quantidade: int
-    corridas: List[Corrida]
+    corridas: List[Ride]

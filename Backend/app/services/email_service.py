@@ -5,12 +5,12 @@ from app.core.config import EMAIL, PASSWORD, IMAP_SERVER, IMAP_PORT
 
 valor_regex = re.compile(r'R\$\s*[\d.,]+')
 
-def buscar_corridas(data_inicio: str, data_fim: str, limite: int = 20):
+def search_rides(start_date: str, end_date: str, limit: int = 20):
     total = 0
-    corridas = []
+    rides = []
 
-    initial_date = datetime.strptime(data_inicio, "%Y-%m-%d").date()
-    final_date = datetime.strptime(data_fim, "%Y-%m-%d").date()
+    start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
 
     try:
         with MailBox(IMAP_SERVER, IMAP_PORT).login(EMAIL, PASSWORD) as mb:
@@ -20,11 +20,11 @@ def buscar_corridas(data_inicio: str, data_fim: str, limite: int = 20):
             for msg in mb.fetch(
                 AND(
                     from_="noreply@uber.com",
-                    date_gte=initial_date,
-                    date_lt=final_date
+                    date_gte = start_date,
+                    date_lt = end_date
                 ),
-                limit=limite,
-                reverse=True
+                limit = limit,
+                reverse = True
             ):
                 match = valor_regex.search(msg.html or "")
 
@@ -35,15 +35,15 @@ def buscar_corridas(data_inicio: str, data_fim: str, limite: int = 20):
 
                     total += valor
 
-                    corridas.append({
-                        "valor": valor,
-                        "data": msg.date.strftime("%d/%m/%Y")
+                    rides.append({
+                        "value": valor,
+                        "date": msg.date.strftime("%Y-%m-%d")
                     })
 
         return {
             "total": total,
-            "quantidade": len(corridas),
-            "corridas": corridas
+            "count": len(rides),
+            "rides": rides
         }
 
     except Exception as e:
